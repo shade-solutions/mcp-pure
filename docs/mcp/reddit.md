@@ -42,12 +42,12 @@ To use the Reddit MCP server, you need to create a Reddit application to get you
 
 1. **Visit Reddit App Preferences**: Go to [reddit.com/prefs/apps](https://www.reddit.com/prefs/apps).
 2. **Create a New App**: Scroll to the bottom and click **"are you a developer? create an app..."** or **"create another app..."**.
-3. **Fill the Form**:
-   - **name**: Give it a name (e.g., `mcp-pure`).
+### 3. Fill the Form:
+   - **name**: Give it a unique name. **IMPORTANT**: Do not include the word "reddit" in the name (e.g., use `mcp-pure-hub` instead of `reddit-mcp`).
    - **App type**: You **MUST** select **script**.
    - **description**: Optional.
    - **about url**: Optional.
-   - **redirect uri**: Enter `http://localhost:8080` (this is required but not used for scripts).
+   - **redirect uri**: Enter `http://localhost:8080` or `https://example.com`. Even though it's not used for scripts, Reddit requires a valid URL here.
 4. **Click "create app"**: Once saved, your app details will appear.
 5. **Copy Credentials**:
    - **Client ID**: The string of characters directly under "personal use script".
