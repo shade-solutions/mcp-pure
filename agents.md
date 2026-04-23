@@ -36,3 +36,22 @@ Before building, use the following search queries:
 - [ ] Add documentation in `README.md`.
 - [ ] Test locally using `bun dev`.
 - [ ] Deploy to Cloudflare.
+
+## Research Findings: Reddit MCP
+
+### API Details
+- **Base URL**: `https://www.reddit.com/dev/api/`
+- **Auth**: OAuth2 (Client ID, Client Secret, Username, Password).
+- **Rate Limits**: Strict (60 requests per minute).
+
+### Candidate Tools
+1. `search_reddit`: Search for posts or subreddits.
+2. `get_subreddit_posts`: List top/hot/new posts in a subreddit.
+3. `get_post_details`: Get comments and content of a specific post.
+4. `create_post`: Submit a new post (Write access required).
+5. `reply_to_comment`: Reply to a specific comment (Write access required).
+
+### Implementation Plan for Reddit MCP
+- Use `snoowrap` or raw `fetch` for API calls.
+- Mount at `/mcp/reddit`.
+- Requires `REDDIT_CLIENT_ID`, `REDDIT_CLIENT_SECRET`, `REDDIT_USER_AGENT`.
