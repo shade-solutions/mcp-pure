@@ -28,7 +28,7 @@ export default async function Home() {
             <Link href="/docs/development" className="hover:text-white transition-colors">Deploy</Link>
           </div>
           <Separator orientation="vertical" className="h-4 bg-white/10 hidden md:block" />
-          <a href="https://github.com/shade-solutions/mcppure" className="text-slate-400 hover:text-white transition-colors">
+          <a href="https://github.com/shade-solutions/mcp-pure" className="text-slate-400 hover:text-white transition-colors">
             <Github className="w-5 h-5" />
           </a>
         </div>
@@ -122,7 +122,7 @@ export default async function Home() {
           <p>© 2026 MCP Pure. Powered by Shade Solutions.</p>
         </div>
         <div className="flex gap-8">
-          <a href="https://github.com/shade-solutions/mcppure" className="hover:text-white transition-colors flex items-center gap-2">
+          <a href="https://github.com/shade-solutions/mcp-pure" className="hover:text-white transition-colors flex items-center gap-2">
             <Github className="w-4 h-4" />
             GitHub
           </a>

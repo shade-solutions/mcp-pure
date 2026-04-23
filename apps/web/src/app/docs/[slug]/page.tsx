@@ -37,7 +37,7 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
         </Link>
         <div className="flex items-center gap-4">
           <img src="https://visitor-badge.laobi.icu/badge?page_id=shade-solutions.mcppure&color=blue" alt="Visitors" className="h-6 opacity-60" />
-          <a href="https://github.com/shade-solutions/mcppure" className="text-slate-500 hover:text-white transition-colors">
+          <a href="https://github.com/shade-solutions/mcp-pure" className="text-slate-500 hover:text-white transition-colors">
             <Github className="w-5 h-5" />
           </a>
         </div>
