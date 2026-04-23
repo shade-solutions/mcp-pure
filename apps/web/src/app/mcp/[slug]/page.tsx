@@ -43,7 +43,7 @@ export default async function McpPage({ params }: { params: Promise<{ slug: stri
         <div className="flex items-center gap-6">
           <img src="https://visitor-badge.laobi.icu/badge?page_id=shaswatraj.mcppure&color=000000" alt="Visitors" className="h-6 grayscale contrast-125 dark:invert" />
           <ModeToggle />
-          <a href="https://github.com/shaswatraj/mcppure" className="text-muted-foreground hover:text-foreground transition-colors">
+          <a href="https://github.com/shade-solutions/mcp-pure" className="text-muted-foreground hover:text-foreground transition-colors">
             <Github className="w-5 h-5" />
           </a>
         </div>
@@ -57,7 +57,7 @@ export default async function McpPage({ params }: { params: Promise<{ slug: stri
         <p className="text-muted-foreground text-xl leading-relaxed max-w-2xl mb-12 font-medium italic">
           {doc.frontmatter.description}
         </p>
-        
+
         <div className="p-8 bg-card border border-border shadow-md flex flex-col md:flex-row md:items-center justify-between gap-8">
           <div className="flex flex-col gap-3">
             <div className="flex items-center gap-3">
@@ -69,12 +69,12 @@ export default async function McpPage({ params }: { params: Promise<{ slug: stri
             </code>
           </div>
           <div className="flex items-center gap-4">
-             <div className="w-12 h-12 bg-accent border border-border flex items-center justify-center shadow-sm">
-               <Info className="w-6 h-6 text-accent-foreground" />
-             </div>
-             <p className="text-[11px] text-muted-foreground leading-snug max-w-[160px] font-bold uppercase tracking-tight">
-               Use this URL in your MCP client settings (SSE transport).
-             </p>
+            <div className="w-12 h-12 bg-accent border border-border flex items-center justify-center shadow-sm">
+              <Info className="w-6 h-6 text-accent-foreground" />
+            </div>
+            <p className="text-[11px] text-muted-foreground leading-snug max-w-[160px] font-bold uppercase tracking-tight">
+              Use this URL in your MCP client settings (SSE transport).
+            </p>
           </div>
         </div>
       </header>
@@ -83,8 +83,8 @@ export default async function McpPage({ params }: { params: Promise<{ slug: stri
         <Separator className="bg-border" />
       </div>
 
-      <main className="max-w-4xl mx-auto px-6 py-16 prose prose-slate prose-lg dark:prose-invert max-w-none prose-headings:font-heading prose-headings:tracking-tighter prose-headings:uppercase prose-p:text-muted-foreground prose-p:font-medium prose-strong:text-foreground prose-a:text-primary prose-pre:p-0 prose-pre:bg-transparent prose-pre:border-none prose-code:text-primary prose-code:bg-muted prose-code:px-1 prose-code:py-0.5 prose-code:rounded-none prose-code:font-bold">
-        <ReactMarkdown 
+      <main className="max-w-4xl mx-auto px-6 py-16 prose prose-slate prose-lg dark:prose-invert prose-headings:font-heading prose-headings:tracking-tighter prose-headings:uppercase prose-p:text-muted-foreground prose-p:font-medium prose-strong:text-foreground prose-a:text-primary prose-pre:p-0 prose-pre:bg-transparent prose-pre:border-none prose-code:text-primary prose-code:bg-muted prose-code:px-1 prose-code:py-0.5 prose-code:rounded-none prose-code:font-bold">
+        <ReactMarkdown
           remarkPlugins={[remarkGfm]}
           components={{
             code({ node, inline, className, children, ...props }: any) {

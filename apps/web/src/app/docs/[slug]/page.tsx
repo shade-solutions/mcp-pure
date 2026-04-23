@@ -42,7 +42,7 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
         <div className="flex items-center gap-6">
           <img src="https://visitor-badge.laobi.icu/badge?page_id=shaswatraj.mcppure&color=000000" alt="Visitors" className="h-6 grayscale contrast-125 dark:invert" />
           <ModeToggle />
-          <a href="https://github.com/shaswatraj/mcppure" className="text-muted-foreground hover:text-foreground transition-colors">
+          <a href="https://github.com/shade-solutions/mcp-pure" className="text-muted-foreground hover:text-foreground transition-colors">
             <Github className="w-5 h-5" />
           </a>
         </div>
@@ -52,8 +52,8 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
         <Separator className="bg-border" />
       </div>
 
-      <main className="max-w-3xl mx-auto px-6 py-16 prose prose-slate prose-lg dark:prose-invert max-w-none prose-headings:font-heading prose-headings:tracking-tighter prose-headings:uppercase prose-p:text-muted-foreground prose-p:font-medium prose-strong:text-foreground prose-a:text-primary prose-pre:p-0 prose-pre:bg-transparent prose-pre:border-none prose-code:text-primary prose-code:bg-muted prose-code:px-1 prose-code:py-0.5 prose-code:rounded-none prose-code:font-bold">
-        <ReactMarkdown 
+      <main className="max-w-3xl mx-auto px-6 py-16 prose prose-slate prose-lg dark:prose-invert prose-headings:font-heading prose-headings:tracking-tighter prose-headings:uppercase prose-p:text-muted-foreground prose-p:font-medium prose-strong:text-foreground prose-a:text-primary prose-pre:p-0 prose-pre:bg-transparent prose-pre:border-none prose-code:text-primary prose-code:bg-muted prose-code:px-1 prose-code:py-0.5 prose-code:rounded-none prose-code:font-bold">
+        <ReactMarkdown
           remarkPlugins={[remarkGfm]}
           components={{
             code({ node, inline, className, children, ...props }: any) {

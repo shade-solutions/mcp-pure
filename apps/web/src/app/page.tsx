@@ -28,7 +28,7 @@ export default async function Home() {
           <Separator orientation="vertical" className="h-4 hidden md:block" />
           <div className="flex items-center gap-4">
             <ModeToggle />
-            <a href="https://github.com/shaswatraj/mcppure" className="text-muted-foreground hover:text-foreground transition-colors">
+            <a href="https://github.com/shade-solutions/mcp-pure" className="text-muted-foreground hover:text-foreground transition-colors">
               <Github className="w-5 h-5" />
             </a>
           </div>
@@ -51,7 +51,7 @@ export default async function Home() {
             <Link href="/docs/clients text-white">Get Started</Link>
           </Button>
           <div className="flex items-center gap-4">
-             <img src="https://visitor-badge.laobi.icu/badge?page_id=shaswatraj.mcppure&color=000000" alt="Visitors" className="h-10 grayscale contrast-125 dark:invert" />
+            <img src="https://visitor-badge.laobi.icu/badge?page_id=shaswatraj.mcppure&color=000000" alt="Visitors" className="h-10 grayscale contrast-125 dark:invert" />
           </div>
         </div>
       </header>
@@ -122,12 +122,12 @@ export default async function Home() {
       <footer className="max-w-6xl mx-auto px-6 py-24 border-t border-border flex flex-col md:flex-row justify-between items-center gap-8 text-muted-foreground text-sm font-sans font-bold uppercase tracking-widest">
         <p>© 2026 MCP Pure • Shade Solutions</p>
         <div className="flex gap-12">
-          <a href="https://github.com/shaswatraj/mcppure" className="hover:text-foreground transition-colors flex items-center gap-2">
+          <a href="https://github.com/shade-solutions/mcp-pure" className="hover:text-foreground transition-colors flex items-center gap-2">
             <Github className="w-4 h-4" />
             Source
           </a>
           <Link href="/docs/clients" className="hover:text-foreground transition-colors text-primary">Setup</Link>
-          <a href="#" className="hover:text-foreground transition-colors">Discord</a>
+          {/* <a href="#" className="hover:text-foreground transition-colors">Discord</a> */}
         </div>
       </footer>
     </div>
