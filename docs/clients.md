@@ -57,7 +57,7 @@ Add the following to your `claude_desktop_config.json`:
 
 If you want to host your own instance of MCP Pure:
 
-1. Clone the repo: `git clone https://github.com/shaswatraj/mcppure`
+1. Clone the repo: `git clone https://github.com/shade-solutions/mcppure`
 2. Install dependencies: `bun install`
 3. Configure your secrets in Cloudflare:
    ```bash
