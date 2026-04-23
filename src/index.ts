@@ -37,7 +37,9 @@ app.get("/", (c) => {
 });
 
 // Import and mount servers
-// import bluesky from "./mcp/bluesky";
-// app.route("/mcp/bluesky", bluesky);
+import bluesky from "./mcp/bluesky";
+import reddit from "./mcp/reddit";
+app.route("/mcp/bluesky", bluesky);
+app.route("/mcp/reddit", reddit);
 
 export default app;
