@@ -2,7 +2,7 @@
 title: Resend MCP
 description: Send high-deliverability emails, manage audiences, contacts, and verify domains with the Resend email API.
 icon: ✉️
-route: /mcp/resend
+route: /mcp-server/resend
 ---
 
 # Resend MCP Server
@@ -25,7 +25,7 @@ Add the following to your MCP client configuration:
 {
   "mcpServers": {
     "resend": {
-      "url": "https://mcppure.shraj.workers.dev/mcp/resend",
+      "url": "https://mcppure.shraj.workers.dev/mcp-server/resend",
       "headers": {
         "x-resend-api-key": "your-resend-api-key"
       }

@@ -2,7 +2,7 @@
 title: GitHub MCP
 description: Manage repositories, issues, PRs, and explore code via the GitHub API.
 icon: 🐙
-route: /mcp/github
+route: /mcp-server/github
 ---
 
 # GitHub MCP Server
@@ -26,7 +26,7 @@ Add the following to your MCP client configuration:
 {
   "mcpServers": {
     "github": {
-      "url": "https://mcppure.shraj.workers.dev/mcp/github",
+      "url": "https://mcppure.shraj.workers.dev/mcp-server/github",
       "headers": {
         "x-github-token": "your-personal-access-token"
       }

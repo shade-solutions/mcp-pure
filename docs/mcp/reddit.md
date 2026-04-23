@@ -2,7 +2,7 @@
 title: Reddit MCP
 description: Browse subreddits, search posts, and interact with the front page of the internet.
 icon: 🔥
-route: /mcp/reddit
+route: /mcp-server/reddit
 ---
 
 # Reddit MCP Server
@@ -24,7 +24,7 @@ Add the following to your MCP client configuration:
 {
   "mcpServers": {
     "reddit": {
-      "url": "https://mcppure.shraj.workers.dev/mcp/reddit",
+      "url": "https://mcppure.shraj.workers.dev/mcp-server/reddit",
       "headers": {
         "x-reddit-client-id": "your-client-id",
         "x-reddit-client-secret": "your-client-secret",

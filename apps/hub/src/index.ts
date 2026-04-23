@@ -20,9 +20,9 @@ import bluesky from "./mcp/bluesky";
 import reddit from "./mcp/reddit";
 import github from "./mcp/github";
 import resend from "./mcp/resend";
-app.route("/mcp/bluesky", bluesky);
-app.route("/mcp/reddit", reddit);
-app.route("/mcp/github", github);
-app.route("/mcp/resend", resend);
+app.route("/mcp-server/bluesky", bluesky);
+app.route("/mcp-server/reddit", reddit);
+app.route("/mcp-server/github", github);
+app.route("/mcp-server/resend", resend);
 
 export default app;

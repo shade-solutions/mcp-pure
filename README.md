@@ -20,10 +20,10 @@ A central, open-source hub for high-performance Model Context Protocol (MCP) ser
 
 | Service | Route | Status |
 | :--- | :--- | :--- |
-| **Bluesky** | `/mcp/bluesky` | ✅ Active |
-| **Reddit** | `/mcp/reddit` | ✅ Active |
-| **GitHub** | `/mcp/github` | ✅ Active |
-| **Resend** | `/mcp/resend` | ✅ Active |
+| **Bluesky** | `/mcp-server/bluesky` | ✅ Active |
+| **Reddit** | `/mcp-server/reddit` | ✅ Active |
+| **GitHub** | `/mcp-server/github` | ✅ Active |
+| **Resend** | `/mcp-server/resend` | ✅ Active |
 
 ## 🛠 Local Development
 

@@ -2,7 +2,7 @@
 title: Bluesky MCP
 description: Full integration with the AT Protocol for social networking.
 icon: 🧊
-route: /mcp/bluesky
+route: /mcp-server/bluesky
 ---
 
 # Bluesky MCP Server
@@ -26,7 +26,7 @@ Add the following to your MCP client configuration:
 {
   "mcpServers": {
     "bluesky": {
-      "url": "https://mcppure.shraj.workers.dev/mcp/bluesky",
+      "url": "https://mcppure.shraj.workers.dev/mcp-server/bluesky",
       "headers": {
         "x-bluesky-identifier": "your-handle.bsky.social",
         "x-bluesky-app-password": "your-app-password"
