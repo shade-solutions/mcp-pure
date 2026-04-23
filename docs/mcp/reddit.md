@@ -36,6 +36,27 @@ Add the following to your MCP client configuration:
 }
 ```
 
+## How to get Credentials
+
+To use the Reddit MCP server, you need to create a Reddit application to get your API credentials.
+
+1. **Visit Reddit App Preferences**: Go to [reddit.com/prefs/apps](https://www.reddit.com/prefs/apps).
+2. **Create a New App**: Scroll to the bottom and click **"are you a developer? create an app..."** or **"create another app..."**.
+3. **Fill the Form**:
+   - **name**: Give it a name (e.g., `mcp-pure`).
+   - **App type**: You **MUST** select **script**.
+   - **description**: Optional.
+   - **about url**: Optional.
+   - **redirect uri**: Enter `http://localhost:8080` (this is required but not used for scripts).
+4. **Click "create app"**: Once saved, your app details will appear.
+5. **Copy Credentials**:
+   - **Client ID**: The string of characters directly under "personal use script".
+   - **Client Secret**: Labeled as **secret**.
+6. **Account Details**: Use your standard Reddit **Username** and **Password** in the headers.
+
+> [!IMPORTANT]
+> Ensure your app type is set to **script**, otherwise authentication will fail.
+
 ## Tools
 
 - `search_reddit`: Search for posts or subreddits.
