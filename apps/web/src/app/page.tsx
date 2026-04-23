@@ -15,6 +15,13 @@ const servers = [
     url: 'https://mcppure.shraj.workers.dev/mcp/reddit',
     status: 'Active',
   },
+  {
+    name: 'GitHub',
+    icon: '🐙',
+    description: 'Manage repositories, issues, PRs, and explore code via the GitHub API.',
+    url: 'https://mcppure.shraj.workers.dev/mcp/github',
+    status: 'Active',
+  },
 ];
 
 export default function Home() {

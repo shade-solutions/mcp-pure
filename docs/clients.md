@@ -8,6 +8,7 @@ MCP Pure servers can be used with any MCP-compatible client. Here is how to conf
 ### Routes:
 - **Bluesky**: `https://mcppure.shraj.workers.dev/mcp/bluesky`
 - **Reddit**: `https://mcppure.shraj.workers.dev/mcp/reddit`
+- **GitHub**: `https://mcppure.shraj.workers.dev/mcp/github`
 
 ---
 
