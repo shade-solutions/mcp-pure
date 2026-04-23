@@ -9,8 +9,10 @@ app.get("/health", (c) => c.json({ ok: true, service: "mcppure" }));
 import bluesky from "./mcp/bluesky";
 import reddit from "./mcp/reddit";
 import github from "./mcp/github";
+import resend from "./mcp/resend";
 app.route("/mcp/bluesky", bluesky);
 app.route("/mcp/reddit", reddit);
 app.route("/mcp/github", github);
+app.route("/mcp/resend", resend);
 
 export default app;
