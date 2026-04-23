@@ -1,19 +1,15 @@
 {
-	"name": "mcppure",
-	"type": "module",
-	"scripts": {
-		"dev": "wrangler dev",
-		"deploy": "wrangler deploy --minify",
-		"cf-typegen": "wrangler types --env-interface CloudflareBindings"
-	},
-	"dependencies": {
-		"@atproto/api": "^0.19.11",
-		"@modelcontextprotocol/sdk": "^1.29.0",
-		"hono": "^4.12.14",
-		"zod": "^4.3.6"
-	},
-	"devDependencies": {
-		"@types/node": "^25.6.0",
-		"wrangler": "^4.84.1"
-	}
+  "name": "mcppure-monorepo",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "mcp-servers/*"
+  ],
+  "scripts": {
+    "dev:hub": "cd apps/hub && bun dev",
+    "dev:web": "cd apps/web && bun dev",
+    "deploy:hub": "cd apps/hub && bun run deploy",
+    "deploy:web": "cd apps/web && bun run pages:build",
+    "install:all": "bun install"
+  }
 }
