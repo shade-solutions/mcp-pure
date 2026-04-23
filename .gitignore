@@ -43,3 +43,5 @@ out/
 # cf
 .cloudflare
 .next-on-pages
+apps/hub/public/
+mcp-servers/bluesky-mcp-server/
