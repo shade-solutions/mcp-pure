@@ -40,6 +40,9 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
           </Link>
         </Button>
         <div className="flex items-center gap-6">
+          <Button variant="outline" size="sm" className="rounded-none h-8 px-3 font-bold uppercase tracking-widest text-[10px] hidden md:flex" asChild>
+            <a href="https://github.com/shade-solutions/mcp-pure" target="_blank" rel="noreferrer">Contribute</a>
+          </Button>
           <img src="https://visitor-badge.laobi.icu/badge?page_id=shaswatraj.mcppure&color=000000" alt="Visitors" className="h-6 grayscale contrast-125 dark:invert" />
           <ModeToggle />
           <a href="https://github.com/shade-solutions/mcp-pure" className="text-muted-foreground hover:text-foreground transition-colors">

@@ -21,9 +21,12 @@ export default async function Home() {
           <span className="font-heading">MCP Pure</span>
         </Link>
         <div className="flex items-center gap-6">
-          <div className="hidden md:flex gap-6 text-sm font-medium text-muted-foreground">
+          <div className="hidden md:flex gap-6 text-sm font-medium text-muted-foreground items-center">
             <Link href="/docs/clients" className="hover:text-foreground transition-colors">Setup</Link>
             <Link href="/docs/development" className="hover:text-foreground transition-colors">Deploy</Link>
+            <Button variant="outline" size="sm" className="rounded-none h-8 px-3 font-bold uppercase tracking-widest text-[10px]" asChild>
+              <a href="https://github.com/shade-solutions/mcp-pure" target="_blank" rel="noreferrer">Contribute</a>
+            </Button>
           </div>
           <Separator orientation="vertical" className="h-4 hidden md:block" />
           <div className="flex items-center gap-4">
