@@ -6,6 +6,8 @@
     "mcp-servers/*"
   ],
   "scripts": {
+    "deploy": "bun run build:web && bun run deploy:hub",
+    "build:web": "cd apps/web && bun run build && rm -rf ../hub/public/* && cp -r out/* ../hub/public/",
     "dev:hub": "cd apps/hub && bun dev",
     "dev:web": "cd apps/web && bun dev",
     "deploy:hub": "cd apps/hub && bun run deploy",
