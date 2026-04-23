@@ -16,16 +16,16 @@ export function CodeBlock({ language, children }: { language: string, children: 
   };
 
   return (
-    <div className="relative group rounded-xl overflow-hidden border border-white/10 my-6 bg-[#1e1e1e]">
-      <div className="flex items-center justify-between px-4 py-2 bg-white/5 border-b border-white/10">
-        <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">{language}</span>
+    <div className="relative group rounded-none overflow-hidden border border-border my-8 bg-muted shadow-sm">
+      <div className="flex items-center justify-between px-4 py-2 bg-background border-b border-border">
+        <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-[0.2em]">{language}</span>
         <Button 
           variant="ghost" 
           size="icon" 
-          className="w-8 h-8 text-slate-400 hover:text-white hover:bg-white/10"
+          className="w-8 h-8 text-muted-foreground hover:text-foreground rounded-none"
           onClick={onCopy}
         >
-          {copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
+          {copied ? <Check className="w-4 h-4 text-primary" /> : <Copy className="w-4 h-4" />}
         </Button>
       </div>
       <SyntaxHighlighter
