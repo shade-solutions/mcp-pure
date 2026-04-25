@@ -7,13 +7,13 @@ export class ResendService {
   private baseUrl = "https://api.resend.com";
 
   constructor(env: ResendEnv) {
-    if (!env.RESEND_API_KEY) {
-      throw new Error("RESEND_API_KEY is required");
-    }
-    this.apiKey = env.RESEND_API_KEY;
+    this.apiKey = env.RESEND_API_KEY || "";
   }
 
   private async fetch(endpoint: string, options: RequestInit = {}) {
+    if (!this.apiKey) {
+      throw new Error("Resend API key missing. Please provide x-resend-api-key header.");
+    }
     const response = await fetch(`${this.baseUrl}${endpoint}`, {
       ...options,
       headers: {
