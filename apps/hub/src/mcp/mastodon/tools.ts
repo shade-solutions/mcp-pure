@@ -288,5 +288,29 @@ export function buildMcpServer(service: MastodonService) {
     }
   );
 
+  server.registerTool(
+    'whoami',
+    {
+      description: "Get the authenticated user's account details.",
+      inputSchema: z.object({}),
+    },
+    async () => {
+      const results = await service.verifyCredentials();
+      return { content: [{ type: 'text', text: JSON.stringify(results, null, 2) }] };
+    }
+  );
+
+  server.registerTool(
+    'fetch_my_account_details',
+    {
+      description: "Alias for whoami. Get the authenticated user's account details.",
+      inputSchema: z.object({}),
+    },
+    async () => {
+      const results = await service.verifyCredentials();
+      return { content: [{ type: 'text', text: JSON.stringify(results, null, 2) }] };
+    }
+  );
+
   return server;
 }

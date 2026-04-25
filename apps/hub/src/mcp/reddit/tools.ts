@@ -100,5 +100,35 @@ export function buildMcpServer(service: RedditService) {
     }
   );
 
+  server.registerTool(
+    'whoami',
+    {
+      title: 'Who Am I',
+      description: 'Get information about the authenticated Reddit user.',
+      inputSchema: z.object({}),
+    },
+    async () => {
+      const results = await service.getMe();
+      return {
+        content: [{ type: 'text', text: JSON.stringify(results, null, 2) }],
+      };
+    }
+  );
+
+  server.registerTool(
+    'fetch_my_account_details',
+    {
+      title: 'Fetch My Account Details',
+      description: 'Alias for whoami. Get information about the authenticated Reddit user.',
+      inputSchema: z.object({}),
+    },
+    async () => {
+      const results = await service.getMe();
+      return {
+        content: [{ type: 'text', text: JSON.stringify(results, null, 2) }],
+      };
+    }
+  );
+
   return server;
 }

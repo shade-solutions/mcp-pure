@@ -14,11 +14,41 @@ export function buildMcpServer(service: GitHubService) {
       title: 'Get User Info',
       description: 'Get information about the authenticated user or a specific GitHub user.',
       inputSchema: z.object({
-        username: z.string().optional(),
+        username: z.string().optional().describe('Username to fetch info for (omit for current user)'),
       }),
     },
     async ({ username }) => {
       const results = await service.getUserInfo(username);
+      return {
+        content: [{ type: 'text', text: JSON.stringify(results, null, 2) }],
+      };
+    }
+  );
+
+  server.registerTool(
+    'whoami',
+    {
+      title: 'Who Am I',
+      description: 'Get information about the authenticated GitHub user.',
+      inputSchema: z.object({}),
+    },
+    async () => {
+      const results = await service.getUserInfo();
+      return {
+        content: [{ type: 'text', text: JSON.stringify(results, null, 2) }],
+      };
+    }
+  );
+
+  server.registerTool(
+    'fetch_my_account_details',
+    {
+      title: 'Fetch My Account Details',
+      description: 'Alias for whoami. Get information about the authenticated GitHub user.',
+      inputSchema: z.object({}),
+    },
+    async () => {
+      const results = await service.getUserInfo();
       return {
         content: [{ type: 'text', text: JSON.stringify(results, null, 2) }],
       };

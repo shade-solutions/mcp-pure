@@ -44,6 +44,15 @@ export function buildMcpServer(service: BlueskyService) {
 
   registerJsonTool(
     server,
+    'fetch_my_account_details',
+    'Fetch My Account Details',
+    'Alias for whoami. Describe the active Bluesky session and configured service URL.',
+    z.object({}),
+    async () => service.whoami(),
+  );
+
+  registerJsonTool(
+    server,
     'resolve_handle',
     'Resolve Handle',
     'Resolve a Bluesky handle to a DID.',

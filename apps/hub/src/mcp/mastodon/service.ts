@@ -159,4 +159,8 @@ export class MastodonService {
   async getFilters() {
     return this.fetch("/api/v2/filters");
   }
+
+  async verifyCredentials() {
+    return this.fetch("/api/v1/accounts/verify_credentials");
+  }
 }

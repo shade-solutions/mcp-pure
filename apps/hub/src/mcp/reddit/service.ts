@@ -116,4 +116,8 @@ export class RedditService {
       body,
     });
   }
+
+  async getMe() {
+    return this.request('/api/v1/me');
+  }
 }

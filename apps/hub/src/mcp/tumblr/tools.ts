@@ -150,6 +150,30 @@ export function buildMcpServer(service: TumblrService) {
     }
   );
 
+  server.registerTool(
+    'whoami',
+    {
+      description: "Alias for get_user_info. Get the authenticated user's profile information and blogs.",
+      inputSchema: z.object({}),
+    },
+    async () => {
+      const results = await service.getUserInfo();
+      return { content: [{ type: 'text', text: JSON.stringify(results, null, 2) }] };
+    }
+  );
+
+  server.registerTool(
+    'fetch_my_account_details',
+    {
+      description: "Alias for get_user_info. Get the authenticated user's profile information and blogs.",
+      inputSchema: z.object({}),
+    },
+    async () => {
+      const results = await service.getUserInfo();
+      return { content: [{ type: 'text', text: JSON.stringify(results, null, 2) }] };
+    }
+  );
+
   // Search Tool
   server.registerTool(
     'search_tagged',
