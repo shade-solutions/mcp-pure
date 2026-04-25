@@ -28,6 +28,7 @@ A central, open-source hub for high-performance Model Context Protocol (MCP) ser
 | **Tumblr** | `/mcp-server/tumblr` | ✅ Active |
 | **Telegram** | `/mcp-server/telegram` | ✅ Active |
 | **Slack** | `/mcp-server/slack` | ✅ Active |
+| **YouTube** | `/mcp-server/youtube` | ✅ Active |
 
 ## 🛠 Local Development
 
