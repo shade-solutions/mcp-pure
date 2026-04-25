@@ -29,6 +29,8 @@ A central, open-source hub for high-performance Model Context Protocol (MCP) ser
 | **Telegram** | `/mcp-server/telegram` | ✅ Active |
 | **Slack** | `/mcp-server/slack` | ✅ Active |
 | **YouTube** | `/mcp-server/youtube` | ✅ Active |
+| **Apollo** | `/mcp-server/apollo` | ✅ Active |
+| **Exa Search** | `/mcp-server/exa` | ✅ Active |
 
 ## 🛠 Local Development
 
