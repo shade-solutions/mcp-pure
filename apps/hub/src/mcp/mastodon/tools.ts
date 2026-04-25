@@ -41,6 +41,20 @@ export function buildMcpServer(service: MastodonService) {
   );
 
   server.registerTool(
+    'unfavourite_status',
+    {
+      description: 'Remove a status from your favourites.',
+      inputSchema: z.object({
+        id: z.string().describe('The ID of the status to unfavourite'),
+      }),
+    },
+    async ({ id }) => {
+      const results = await service.unfavouriteStatus(id);
+      return { content: [{ type: 'text', text: JSON.stringify(results, null, 2) }] };
+    }
+  );
+
+  server.registerTool(
     'bookmark_status',
     {
       description: 'Add a status to your bookmarks.',
@@ -50,6 +64,62 @@ export function buildMcpServer(service: MastodonService) {
     },
     async ({ id }) => {
       const results = await service.bookmarkStatus(id);
+      return { content: [{ type: 'text', text: JSON.stringify(results, null, 2) }] };
+    }
+  );
+
+  server.registerTool(
+    'unbookmark_status',
+    {
+      description: 'Remove a status from your bookmarks.',
+      inputSchema: z.object({
+        id: z.string().describe('The ID of the status to unbookmark'),
+      }),
+    },
+    async ({ id }) => {
+      const results = await service.unbookmarkStatus(id);
+      return { content: [{ type: 'text', text: JSON.stringify(results, null, 2) }] };
+    }
+  );
+
+  server.registerTool(
+    'boost_status',
+    {
+      description: 'Boost (repost) a status to your followers.',
+      inputSchema: z.object({
+        id: z.string().describe('The ID of the status to boost'),
+      }),
+    },
+    async ({ id }) => {
+      const results = await service.boostStatus(id);
+      return { content: [{ type: 'text', text: JSON.stringify(results, null, 2) }] };
+    }
+  );
+
+  server.registerTool(
+    'unboost_status',
+    {
+      description: 'Remove a boost from a status.',
+      inputSchema: z.object({
+        id: z.string().describe('The ID of the status to unboost'),
+      }),
+    },
+    async ({ id }) => {
+      const results = await service.unboostStatus(id);
+      return { content: [{ type: 'text', text: JSON.stringify(results, null, 2) }] };
+    }
+  );
+
+  server.registerTool(
+    'delete_status',
+    {
+      description: 'Delete one of your own statuses.',
+      inputSchema: z.object({
+        id: z.string().describe('The ID of the status to delete'),
+      }),
+    },
+    async ({ id }) => {
+      const results = await service.deleteStatus(id);
       return { content: [{ type: 'text', text: JSON.stringify(results, null, 2) }] };
     }
   );

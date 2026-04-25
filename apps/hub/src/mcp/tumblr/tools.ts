@@ -78,6 +78,53 @@ export function buildMcpServer(service: TumblrService) {
   );
 
   server.registerTool(
+    'unlike_post',
+    {
+      description: 'Remove a like from a post on Tumblr.',
+      inputSchema: z.object({
+        post_id: z.string().describe("The ID of the post"),
+        reblog_key: z.string().describe("The reblog key of the post"),
+      }),
+    },
+    async ({ post_id, reblog_key }) => {
+      const results = await service.unlikePost(post_id, reblog_key);
+      return { content: [{ type: 'text', text: JSON.stringify(results, null, 2) }] };
+    }
+  );
+
+  server.registerTool(
+    'reblog_post',
+    {
+      description: 'Reblog a post to your own blog.',
+      inputSchema: z.object({
+        blog_identifier: z.string().describe("The blog to reblog TO (e.g. 'myblog')"),
+        post_id: z.string().describe("The ID of the post to reblog"),
+        reblog_key: z.string().describe("The reblog key of the post"),
+        comment: z.string().optional().describe("Optional comment/caption for the reblog"),
+      }),
+    },
+    async ({ blog_identifier, post_id, reblog_key, comment }) => {
+      const results = await service.reblogPost(blog_identifier, post_id, reblog_key, comment);
+      return { content: [{ type: 'text', text: JSON.stringify(results, null, 2) }] };
+    }
+  );
+
+  server.registerTool(
+    'delete_post',
+    {
+      description: 'Delete one of your own posts or reblogs.',
+      inputSchema: z.object({
+        blog_identifier: z.string().describe("The blog identifier"),
+        post_id: z.string().describe("The ID of the post to delete"),
+      }),
+    },
+    async ({ blog_identifier, post_id }) => {
+      const results = await service.deletePost(blog_identifier, post_id);
+      return { content: [{ type: 'text', text: JSON.stringify(results, null, 2) }] };
+    }
+  );
+
+  server.registerTool(
     'follow_blog',
     {
       description: 'Follow a blog on Tumblr.',
@@ -87,6 +134,18 @@ export function buildMcpServer(service: TumblrService) {
     },
     async ({ blog_identifier }) => {
       const results = await service.followBlog(blog_identifier);
+      return { content: [{ type: 'text', text: JSON.stringify(results, null, 2) }] };
+    }
+  );
+
+  server.registerTool(
+    'get_user_info',
+    {
+      description: "Get the authenticated user's profile information and blogs.",
+      inputSchema: z.object({}),
+    },
+    async () => {
+      const results = await service.getUserInfo();
       return { content: [{ type: 'text', text: JSON.stringify(results, null, 2) }] };
     }
   );

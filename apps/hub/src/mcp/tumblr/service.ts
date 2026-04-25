@@ -148,11 +148,36 @@ export class TumblrService {
     });
   }
 
+  async unlikePost(id: string, reblogKey: string) {
+    return this.fetch("/user/unlike", {
+      method: "POST",
+      body: JSON.stringify({ id, reblog_key: reblogKey }),
+    });
+  }
+
+  async reblogPost(blogIdentifier: string, id: string, reblogKey: string, comment?: string) {
+    return this.fetch(`/blog/${blogIdentifier}/post/reblog`, {
+      method: "POST",
+      body: JSON.stringify({ id, reblog_key: reblogKey, comment }),
+    });
+  }
+
+  async deletePost(blogIdentifier: string, id: string) {
+    return this.fetch(`/blog/${blogIdentifier}/post/delete`, {
+      method: "POST",
+      body: JSON.stringify({ id }),
+    });
+  }
+
   async followBlog(blogIdentifier: string) {
     return this.fetch("/user/follow", {
       method: "POST",
       body: JSON.stringify({ url: blogIdentifier }),
     });
+  }
+
+  async getUserInfo() {
+    return this.fetch("/user/info");
   }
 
   // Search Tool

@@ -62,6 +62,18 @@ export class MastodonService {
     return this.fetch(`/api/v1/statuses/${id}/unbookmark`, { method: "POST" });
   }
 
+  async boostStatus(id: string) {
+    return this.fetch(`/api/v1/statuses/${id}/reblog`, { method: "POST" });
+  }
+
+  async unboostStatus(id: string) {
+    return this.fetch(`/api/v1/statuses/${id}/unreblog`, { method: "POST" });
+  }
+
+  async deleteStatus(id: string) {
+    return this.fetch(`/api/v1/statuses/${id}`, { method: "DELETE" });
+  }
+
   // Timeline Tools
   async getHomeTimeline(limit = 20) {
     return this.fetch(`/api/v1/timelines/home?limit=${limit}`);
