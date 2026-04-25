@@ -4,12 +4,17 @@ export type GitHubEnv = {
 };
 
 export class GitHubService {
-  constructor(private readonly env: GitHubEnv) {}
+  private readonly token: string;
+  private readonly userAgent: string;
+
+  constructor(private readonly env: GitHubEnv) {
+    this.token = env.GITHUB_TOKEN || "";
+    this.userAgent = env.GITHUB_USER_AGENT || 'MCP-Pure/0.1.0';
+  }
 
   private async request(path: string, options: RequestInit = {}): Promise<any> {
-    const token = this.env.GITHUB_TOKEN;
-    if (!token) {
-      throw new Error('Missing GITHUB_TOKEN');
+    if (!this.token) {
+      throw new Error("GitHub token missing. Please provide x-github-token header.");
     }
 
     const url = `https://api.github.com${path}`;
@@ -17,8 +22,8 @@ export class GitHubService {
       ...options,
       headers: {
         Accept: 'application/vnd.github.v3+json',
-        Authorization: `token ${token}`,
-        'User-Agent': this.env.GITHUB_USER_AGENT || 'MCP-Pure/0.1.0',
+        Authorization: `token ${this.token}`,
+        'User-Agent': this.userAgent,
         ...options.headers,
       },
     });
