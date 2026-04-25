@@ -25,6 +25,7 @@ A central, open-source hub for high-performance Model Context Protocol (MCP) ser
 | **GitHub** | `/mcp-server/github` | ✅ Active |
 | **Resend** | `/mcp-server/resend` | ✅ Active |
 | **Mastodon** | `/mcp-server/mastodon` | ✅ Active |
+| **Tumblr** | `/mcp-server/tumblr` | ✅ Active |
 
 ## 🛠 Local Development
 
