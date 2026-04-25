@@ -26,19 +26,30 @@ export function buildMcpServer(service: MastodonService) {
     }
   );
 
-  // Search Tool
   server.registerTool(
-    'search',
+    'favourite_status',
     {
-      description: 'Search for accounts, statuses, or hashtags on Mastodon.',
+      description: 'Add a status to your favourites.',
       inputSchema: z.object({
-        query: z.string().describe('The search query'),
-        type: z.enum(['accounts', 'statuses', 'hashtags']).optional().describe('The type of results to return'),
-        limit: z.number().int().min(1).max(40).default(20).describe('Maximum number of results per type'),
+        id: z.string().describe('The ID of the status to favourite'),
       }),
     },
-    async ({ query, type, limit }) => {
-      const results = await service.search(query, type, limit);
+    async ({ id }) => {
+      const results = await service.favouriteStatus(id);
+      return { content: [{ type: 'text', text: JSON.stringify(results, null, 2) }] };
+    }
+  );
+
+  server.registerTool(
+    'bookmark_status',
+    {
+      description: 'Add a status to your bookmarks.',
+      inputSchema: z.object({
+        id: z.string().describe('The ID of the status to bookmark'),
+      }),
+    },
+    async ({ id }) => {
+      const results = await service.bookmarkStatus(id);
       return { content: [{ type: 'text', text: JSON.stringify(results, null, 2) }] };
     }
   );
@@ -73,11 +84,42 @@ export function buildMcpServer(service: MastodonService) {
     }
   );
 
+  server.registerTool(
+    'get_conversations',
+    {
+      description: 'View your direct conversations (DMs).',
+      inputSchema: z.object({
+        limit: z.number().int().min(1).max(40).default(20).describe('Number of conversations to retrieve'),
+      }),
+    },
+    async ({ limit }) => {
+      const results = await service.getConversations(limit);
+      return { content: [{ type: 'text', text: JSON.stringify(results, null, 2) }] };
+    }
+  );
+
+  // Search Tool
+  server.registerTool(
+    'search',
+    {
+      description: 'Search for accounts, statuses, or hashtags on Mastodon.',
+      inputSchema: z.object({
+        query: z.string().describe('The search query'),
+        type: z.enum(['accounts', 'statuses', 'hashtags']).optional().describe('The type of results to return'),
+        limit: z.number().int().min(1).max(40).default(20).describe('Maximum number of results per type'),
+      }),
+    },
+    async ({ query, type, limit }) => {
+      const results = await service.search(query, type, limit);
+      return { content: [{ type: 'text', text: JSON.stringify(results, null, 2) }] };
+    }
+  );
+
   // Account Tools
   server.registerTool(
     'follow_account',
     {
-      description: 'Follow a specific account by its ID.',
+      description: 'Follow a specific account.',
       inputSchema: z.object({
         account_id: z.string().describe('The ID of the account to follow'),
       }),
@@ -89,38 +131,43 @@ export function buildMcpServer(service: MastodonService) {
   );
 
   server.registerTool(
-    'block_account',
+    'mute_account',
     {
-      description: 'Block a specific account by its ID.',
+      description: 'Mute a specific account.',
       inputSchema: z.object({
-        account_id: z.string().describe('The ID of the account to block'),
+        account_id: z.string().describe('The ID of the account to mute'),
+        notifications: z.boolean().optional().default(true).describe('Whether to also mute notifications'),
+        duration: z.number().optional().default(0).describe('Duration of mute in seconds (0 for indefinite)'),
       }),
     },
-    async ({ account_id }) => {
-      const results = await service.blockAccount(account_id);
+    async ({ account_id, notifications, duration }) => {
+      const results = await service.muteAccount(account_id, notifications, duration);
       return { content: [{ type: 'text', text: JSON.stringify(results, null, 2) }] };
     }
   );
 
   server.registerTool(
-    'get_account',
+    'report_account',
     {
-      description: 'Get detailed profile information about an account.',
+      description: 'Report an account for rules violation.',
       inputSchema: z.object({
-        account_id: z.string().describe('The ID of the account'),
+        account_id: z.string().describe('The ID of the account to report'),
+        category: z.enum(['spam', 'violation', 'other']).describe('Category of the report'),
+        comment: z.string().describe('Reason for the report'),
+        status_ids: z.array(z.string()).optional().describe('IDs of statuses as evidence'),
       }),
     },
-    async ({ account_id }) => {
-      const results = await service.getAccount(account_id);
+    async (args) => {
+      const results = await service.reportAccount(args.account_id, args.category, args.comment, args.status_ids);
       return { content: [{ type: 'text', text: JSON.stringify(results, null, 2) }] };
     }
   );
 
-  // Notifications & Bookmarks
+  // Personal Tools
   server.registerTool(
     'get_notifications',
     {
-      description: 'List your recent notifications (mentions, follows, reblogs, likes).',
+      description: 'List your recent notifications.',
       inputSchema: z.object({
         limit: z.number().int().min(1).max(40).default(20).describe('Number of notifications to retrieve'),
       }),
@@ -141,6 +188,32 @@ export function buildMcpServer(service: MastodonService) {
     },
     async ({ limit }) => {
       const results = await service.getBookmarks(limit);
+      return { content: [{ type: 'text', text: JSON.stringify(results, null, 2) }] };
+    }
+  );
+
+  server.registerTool(
+    'get_favourites',
+    {
+      description: 'List your favourited statuses.',
+      inputSchema: z.object({
+        limit: z.number().int().min(1).max(40).default(20).describe('Number of favourites to retrieve'),
+      }),
+    },
+    async ({ limit }) => {
+      const results = await service.getFavourites(limit);
+      return { content: [{ type: 'text', text: JSON.stringify(results, null, 2) }] };
+    }
+  );
+
+  server.registerTool(
+    'get_lists',
+    {
+      description: 'Get your custom Mastodon lists.',
+      inputSchema: z.object({}),
+    },
+    async () => {
+      const results = await service.getLists();
       return { content: [{ type: 'text', text: JSON.stringify(results, null, 2) }] };
     }
   );

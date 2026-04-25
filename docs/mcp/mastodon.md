@@ -11,11 +11,11 @@ The Mastodon MCP server allows AI agents to interact with any Mastodon instance.
 
 ## Features
 
-- **Status Management**: Post new statuses (toots) with visibility controls and spoiler warnings.
-- **Timeline Discovery**: Access Home, Local, and Federated (Public) timelines.
-- **Deep Search**: Search for users, statuses, and hashtags across the network.
-- **Notifications & Bookmarks**: Stay updated with mentions and manage your saved content.
-- **Account Interactions**: Follow or block accounts by their ID.
+- **Full Lifecycle Statuses**: Post toots, favourite (like) statuses, and bookmark content.
+- **Advanced Social**: Follow/unfollow, block, and mute accounts with custom durations.
+- **Moderation**: Report rule-breaking accounts directly from the agent.
+- **Discovery**: Access Home, Federated, and Local timelines, plus search and conversations (DMs).
+- **Personalization**: Access your notifications, bookmarks, favourites, and custom lists.
 
 ## Configuration
 
@@ -37,34 +37,36 @@ Add the following to your MCP client configuration:
 
 ## How to get Credentials
 
-To use the Mastodon MCP server, you need an access token from your Mastodon instance.
-
-1. **Login**: Log in to your Mastodon instance (e.g., `mastodon.social`, `fosstodon.org`).
+1. **Login**: Log in to your Mastodon instance (e.g., `mastodon.social`).
 2. **Settings**: Go to **Preferences** -> **Development**.
 3. **New Application**: Click **"New Application"**.
-   - **Application name**: `MCP Pure`.
-   - **Application website**: `https://mcppure.shraj.workers.dev`.
-   - **Scopes**: Select `read` and `write` (or specific ones like `read:statuses`, `write:statuses`, `read:notifications`, `read:bookmarks`, `write:follows`).
+   - **Application name**: `MCPPURE`
+   - **Application website**: `https://mcppure.shraj.workers.dev`
+   - **Redirect URI**: `urn:ietf:wg:oauth:2.0:oob`
+   - **Scopes**: Select `read` and `write` (or check all detailed scopes for maximum features).
 4. **Submit**: Click **"Submit"** at the bottom.
 5. **Copy Token**: Click on your newly created application and copy the **"Your access token"** string.
 
 ## Tools
 
-### Status Tools
-- `post_status`: Create a new post with text, visibility, and spoiler warning.
-- `get_account`: Get detailed profile information about an account.
+### Status & Interaction
+- `post_status`: Create a new post.
+- `favourite_status`: Like a post.
+- `bookmark_status`: Save a post to bookmarks.
 
-### Timeline Tools
-- `get_home_timeline`: Fetch statuses from accounts you follow.
-- `get_public_timeline`: View public statuses (optionally limited to the local instance).
+### Social & Account
+- `follow_account`: Follow an account.
+- `mute_account`: Mute an account (with optional duration).
+- `report_account`: Report an account for rules violation.
 
-### Search & Discovery
-- `search`: Find accounts, statuses, or hashtags by query.
+### Timelines & Discovery
+- `get_home_timeline`: View your home feed.
+- `get_public_timeline`: View public/federated statuses.
+- `get_conversations`: Access your direct messages.
+- `search`: Find accounts, hashtags, or statuses.
 
-### Account Interactions
-- `follow_account`: Follow an account by its ID.
-- `block_account`: Block an account by its ID.
-
-### Personal Tools
-- `get_notifications`: View recent mentions, reblogs, and follows.
-- `get_bookmarks`: Access your bookmarked statuses.
+### Personal Data
+- `get_notifications`: View recent mentions and interactions.
+- `get_bookmarks`: Access saved statuses.
+- `get_favourites`: Access liked statuses.
+- `get_lists`: Access your custom Mastodon lists.

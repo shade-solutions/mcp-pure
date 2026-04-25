@@ -6,7 +6,7 @@ import { cors } from 'hono/cors';
 app.use('*', cors({
   origin: '*',
   allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowHeaders: ['Content-Type', 'Authorization', 'x-resend-api-key', 'x-github-token', 'x-reddit-client-id', 'x-reddit-client-secret', 'x-reddit-username', 'x-reddit-password', 'x-mastodon-access-token', 'x-mastodon-instance-url', 'x-tumblr-access-token'],
+  allowHeaders: ['Content-Type', 'Authorization', 'x-resend-api-key', 'x-github-token', 'x-reddit-client-id', 'x-reddit-client-secret', 'x-reddit-username', 'x-reddit-password', 'x-mastodon-access-token', 'x-mastodon-instance-url', 'x-tumblr-access-token', 'x-tumblr-consumer-key', 'x-tumblr-consumer-secret', 'x-tumblr-token', 'x-tumblr-token-secret'],
   exposeHeaders: ['Content-Length'],
   maxAge: 600,
   credentials: true,
