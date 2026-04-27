@@ -18,14 +18,38 @@ function pickHeader(headers: Headers, keys: string[]): string | undefined {
 }
 
 function envFromHeaders(headers: Headers): Partial<GitHubEnv> {
+  let token = pickHeader(headers, ['x-github-token', 'github-token', 'github_personal_access_token', 'authorization']);
+  if (token?.startsWith('Bearer ')) {
+    token = token.substring(7);
+  } else if (token?.startsWith('token ')) {
+    token = token.substring(6);
+  }
+
   return {
-    GITHUB_TOKEN: pickHeader(headers, ['x-github-token', 'github-token']),
+    GITHUB_TOKEN: token,
     GITHUB_USER_AGENT: pickHeader(headers, ['x-github-user-agent', 'github-user-agent']),
   };
 }
 
 app.all('/', async (c) => {
-  const headerEnv = envFromHeaders(c.req.raw.headers);
+  // Clone request to modify headers if needed for transport compatibility
+  const rawRequest = c.req.raw;
+  const headers = new Headers(rawRequest.headers);
+  
+  // Ensure Accept header includes both for WebStandardStreamableHTTPServerTransport
+  const accept = headers.get('Accept') || '';
+  if (!accept.includes('application/json') || !accept.includes('text/event-stream')) {
+    headers.set('Accept', 'application/json, text/event-stream');
+  }
+
+  const modifiedRequest = new Request(rawRequest.url, {
+    method: rawRequest.method,
+    headers: headers,
+    body: rawRequest.body,
+    duplex: 'half'
+  } as any);
+
+  const headerEnv = envFromHeaders(headers);
   const requestEnv: GitHubEnv = {
     ...c.env,
     ...Object.fromEntries(
@@ -41,12 +65,13 @@ app.all('/', async (c) => {
   
   let parsedBody: any;
   try {
+    // We need to read from the original request or a clone if we want to pass it to transport
     parsedBody = await c.req.json();
   } catch {
     parsedBody = undefined;
   }
 
-  return transport.handleRequest(c.req.raw, { parsedBody });
+  return transport.handleRequest(modifiedRequest, { parsedBody });
 });
 
 export default app;
