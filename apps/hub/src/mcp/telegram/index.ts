@@ -5,33 +5,20 @@ import { SSEServerTransport } from '@modelcontextprotocol/sdk/server/sse.js';
 
 const app = new Hono();
 
-// Per-request service initialization
-const getService = (c: any) => {
-  const token = c.req.header('x-telegram-bot-token');
-  return new TelegramService({
-    TELEGRAM_BOT_TOKEN: token
-  });
-};
+import { pickHeader, handleMcpRequest } from '../../utils/mcp.js';
 
-app.get('/', async (c) => {
-  const transport = new SSEServerTransport('/mcp-server/telegram/message', c.res);
-  const service = getService(c);
-  const server = buildMcpServer(service);
-  
-  await server.connect(transport);
-  
-  // Keep connection alive
-  return new Promise(() => {});
-});
+function envFromHeaders(headers: Headers) {
+  return {
+    TELEGRAM_BOT_TOKEN: pickHeader(headers, ['x-telegram-bot-token', 'telegram-bot-token']),
+  };
+}
 
-app.post('/message', async (c) => {
-  const transport = new SSEServerTransport('/mcp-server/telegram/message', c.res);
-  const service = getService(c);
-  const server = buildMcpServer(service);
-  
-  // This part is handled by the SDK transport logic
-  // but we need to ensure the headers are passed if needed
-  await transport.handlePostMessage(c.req.raw, c.res.raw);
+app.all('/', async (c) => {
+  return handleMcpRequest(
+    c,
+    (env) => buildMcpServer(new TelegramService(env)),
+    envFromHeaders
+  );
 });
 
 export default app;

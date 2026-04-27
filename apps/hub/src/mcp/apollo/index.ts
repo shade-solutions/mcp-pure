@@ -5,31 +5,20 @@ import { SSEServerTransport } from '@modelcontextprotocol/sdk/server/sse.js';
 
 const app = new Hono();
 
-// Per-request service initialization
-const getService = (c: any) => {
-  const token = c.req.header('x-apollo-api-key');
-  return new ApolloService({
-    APOLLO_API_KEY: token
-  });
-};
+import { pickHeader, handleMcpRequest } from '../../utils/mcp.js';
 
-app.get('/', async (c) => {
-  const transport = new SSEServerTransport('/mcp-server/apollo/message', c.res);
-  const service = getService(c);
-  const server = buildMcpServer(service);
-  
-  await server.connect(transport);
-  
-  // Keep connection alive
-  return new Promise(() => {});
-});
+function envFromHeaders(headers: Headers) {
+  return {
+    APOLLO_API_KEY: pickHeader(headers, ['x-apollo-api-key', 'apollo-api-key']),
+  };
+}
 
-app.post('/message', async (c) => {
-  const transport = new SSEServerTransport('/mcp-server/apollo/message', c.res);
-  const service = getService(c);
-  const server = buildMcpServer(service);
-  
-  await transport.handlePostMessage(c.req.raw, c.res.raw);
+app.all('/', async (c) => {
+  return handleMcpRequest(
+    c,
+    (env) => buildMcpServer(new ApolloService(env)),
+    envFromHeaders
+  );
 });
 
 export default app;

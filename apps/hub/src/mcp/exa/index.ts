@@ -5,31 +5,20 @@ import { SSEServerTransport } from '@modelcontextprotocol/sdk/server/sse.js';
 
 const app = new Hono();
 
-// Per-request service initialization
-const getService = (c: any) => {
-  const token = c.req.header('x-exa-api-key');
-  return new ExaService({
-    EXA_API_KEY: token
-  });
-};
+import { pickHeader, handleMcpRequest } from '../../utils/mcp.js';
 
-app.get('/', async (c) => {
-  const transport = new SSEServerTransport('/mcp-server/exa/message', c.res);
-  const service = getService(c);
-  const server = buildMcpServer(service);
-  
-  await server.connect(transport);
-  
-  // Keep connection alive
-  return new Promise(() => {});
-});
+function envFromHeaders(headers: Headers) {
+  return {
+    EXA_API_KEY: pickHeader(headers, ['x-exa-api-key', 'exa-api-key']),
+  };
+}
 
-app.post('/message', async (c) => {
-  const transport = new SSEServerTransport('/mcp-server/exa/message', c.res);
-  const service = getService(c);
-  const server = buildMcpServer(service);
-  
-  await transport.handlePostMessage(c.req.raw, c.res.raw);
+app.all('/', async (c) => {
+  return handleMcpRequest(
+    c,
+    (env) => buildMcpServer(new ExaService(env)),
+    envFromHeaders
+  );
 });
 
 export default app;

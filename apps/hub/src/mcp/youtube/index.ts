@@ -5,33 +5,21 @@ import { SSEServerTransport } from '@modelcontextprotocol/sdk/server/sse.js';
 
 const app = new Hono();
 
-// Per-request service initialization
-const getService = (c: any) => {
-  const token = c.req.header('x-youtube-access-token');
-  const apiKey = c.req.header('x-youtube-api-key');
-  return new YouTubeService({
-    YOUTUBE_ACCESS_TOKEN: token,
-    YOUTUBE_API_KEY: apiKey
-  });
-};
+import { pickHeader, handleMcpRequest } from '../../utils/mcp.js';
 
-app.get('/', async (c) => {
-  const transport = new SSEServerTransport('/mcp-server/youtube/message', c.res);
-  const service = getService(c);
-  const server = buildMcpServer(service);
-  
-  await server.connect(transport);
-  
-  // Keep connection alive
-  return new Promise(() => {});
-});
+function envFromHeaders(headers: Headers) {
+  return {
+    YOUTUBE_ACCESS_TOKEN: pickHeader(headers, ['x-youtube-access-token', 'youtube-access-token']),
+    YOUTUBE_API_KEY: pickHeader(headers, ['x-youtube-api-key', 'youtube-api-key']),
+  };
+}
 
-app.post('/message', async (c) => {
-  const transport = new SSEServerTransport('/mcp-server/youtube/message', c.res);
-  const service = getService(c);
-  const server = buildMcpServer(service);
-  
-  await transport.handlePostMessage(c.req.raw, c.res.raw);
+app.all('/', async (c) => {
+  return handleMcpRequest(
+    c,
+    (env) => buildMcpServer(new YouTubeService(env)),
+    envFromHeaders
+  );
 });
 
 export default app;
