@@ -10,12 +10,27 @@ export const metadata: Metadata = {
   description: "A centralized, open-source hub for managed Model Context Protocol servers. Deploying the best AI tools to the edge.",
   keywords: ["MCP", "Model Context Protocol", "AI Tools", "Cloudflare Workers", "Bluesky", "GitHub", "Reddit"],
   authors: [{ name: "Shaswat Raj" }],
+  metadataBase: new URL("https://mcppure.shraj.workers.dev"),
   openGraph: {
     title: "MCP Pure | High-Performance MCP Hub",
     description: "Managed Model Context Protocol servers for AI agents.",
     url: "https://mcppure.shraj.workers.dev",
     siteName: "MCP Pure",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "MCP Pure - High-Performance MCP Hub",
+      },
+    ],
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "MCP Pure | High-Performance MCP Hub",
+    description: "Managed Model Context Protocol servers for AI agents.",
+    images: ["/og-image.png"],
   },
 };
 
