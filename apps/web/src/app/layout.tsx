@@ -11,6 +11,11 @@ export const metadata: Metadata = {
   keywords: ["MCP", "Model Context Protocol", "AI Tools", "Cloudflare Workers", "Bluesky", "GitHub", "Reddit"],
   authors: [{ name: "Shaswat Raj" }],
   metadataBase: new URL("https://mcppure.shraj.workers.dev"),
+  manifest: "/manifest.json",
+  icons: {
+    icon: "/icon.png",
+    apple: "/apple-touch-icon.png",
+  },
   openGraph: {
     title: "MCP Pure | High-Performance MCP Hub",
     description: "Managed Model Context Protocol servers for AI agents.",
