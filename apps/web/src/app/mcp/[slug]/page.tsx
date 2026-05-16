@@ -4,12 +4,8 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { getMcpDoc, getAllMcpDocs } from '@/lib/docs';
 import Link from 'next/link';
-import { Badge } from '@/components/ui/badge';
 import { CodeBlock } from '@/components/code-block';
-import { Separator } from '@/components/ui/separator';
-import { ChevronLeft, Github, Info } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { ModeToggle } from '@/components/mode-toggle';
+import { ChevronLeft, Github, Info, Search, Activity, Zap } from 'lucide-react';
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
@@ -32,85 +28,149 @@ export default async function McpPage({ params }: { params: Promise<{ slug: stri
   const doc = await getMcpDoc(slug);
 
   return (
-    <div className="min-h-screen bg-background text-foreground font-sans selection:bg-primary/20">
-      <nav className="max-w-4xl mx-auto px-6 py-10 flex justify-between items-center">
-        <Button variant="ghost" asChild className="text-muted-foreground hover:text-foreground rounded-none uppercase font-bold text-xs tracking-widest">
-          <Link href="/" className="flex items-center gap-2">
-            <ChevronLeft className="w-4 h-4" />
-            Back to Hub
+    <div className="flex flex-col min-h-screen bg-canvas selection:bg-m-blue-light/30">
+      {/* Top Navigation */}
+      <nav className="fixed top-0 left-0 right-0 h-[64px] bg-canvas/80 backdrop-blur-md border-b border-hairline z-[100] px-6 flex items-center justify-between">
+        <div className="flex items-center gap-8">
+          <Link href="/" className="flex items-center gap-2 group">
+            <div className="flex flex-col gap-[2px]">
+              <div className="m-stripe w-12 h-[3px]" />
+              <span className="text-[18px] font-bold tracking-tight uppercase">MCP PURE</span>
+            </div>
           </Link>
-        </Button>
+          <div className="hidden md:flex gap-6">
+            <Link href="/docs/clients" className="text-[14px] font-light hover:text-on-dark transition-colors text-body">SETUP</Link>
+            <Link href="/docs/development" className="text-[14px] font-light hover:text-on-dark transition-colors text-body">DEPLOY</Link>
+          </div>
+        </div>
         <div className="flex items-center gap-6">
-          <Button variant="outline" size="sm" className="rounded-none h-8 px-3 font-bold uppercase tracking-widest text-[10px] hidden md:flex" asChild>
-            <a href="https://github.com/shade-solutions/mcp-pure" target="_blank" rel="noreferrer">Contribute</a>
-          </Button>
-          <img src="https://visitor-badge.laobi.icu/badge?page_id=shaswatraj.mcppure&color=000000" alt="Visitors" className="h-6 grayscale contrast-125 dark:invert" />
-          <ModeToggle />
-          <a href="https://github.com/shade-solutions/mcp-pure" className="text-muted-foreground hover:text-foreground transition-colors">
-            <Github className="w-5 h-5" />
-          </a>
+          <div className="hidden sm:flex items-center gap-4 text-muted">
+            <Search className="w-4 h-4 cursor-pointer hover:text-on-dark transition-colors" />
+            <a href="https://github.com/shade-solutions/mcp-pure" target="_blank" rel="noreferrer" className="hover:text-on-dark transition-colors">
+              <Github className="w-5 h-5" />
+            </a>
+          </div>
+          <Link href="/docs/clients" className="btn-primary flex items-center justify-center">
+            GET STARTED
+          </Link>
         </div>
       </nav>
 
-      <header className="max-w-4xl mx-auto px-6 pb-16">
-        <div className="flex items-center gap-4 mb-8">
-          <span className="text-6xl grayscale">{doc.frontmatter.icon}</span>
-          <h1 className="text-6xl font-bold font-heading tracking-tighter uppercase italic">{doc.frontmatter.title}</h1>
-        </div>
-        <p className="text-muted-foreground text-xl leading-relaxed max-w-2xl mb-12 font-medium italic">
-          {doc.frontmatter.description}
-        </p>
-
-        <div className="p-8 bg-card border border-border shadow-md flex flex-col md:flex-row md:items-center justify-between gap-8">
-          <div className="flex flex-col gap-3">
-            <div className="flex items-center gap-3">
-              <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-[0.3em]">SSE PROTOCOL URL</span>
-              <Badge variant="outline" className="rounded-none border-primary/50 text-primary text-[9px] h-4 font-bold uppercase tracking-widest">Stable</Badge>
+      <main className="flex-1 pt-[64px]">
+        {/* Hero Section for Server */}
+        <section className="bg-canvas pt-[96px] pb-[64px] border-b border-hairline">
+          <div className="max-w-[1440px] mx-auto px-6">
+            <Link href="/" className="text-label-uppercase text-muted flex items-center gap-2 mb-12 hover:text-on-dark transition-colors">
+              <ChevronLeft className="w-4 h-4" /> BACK TO HUB
+            </Link>
+            
+            <div className="flex items-center gap-8 mb-8">
+              <div className="text-[80px] grayscale">{doc.frontmatter.icon}</div>
+              <h1 className="text-display-lg">{doc.frontmatter.title}</h1>
             </div>
-            <code className="text-sm text-primary font-mono font-bold tracking-tight bg-muted p-3 border border-border shadow-inner">
-              https://mcppure.shraj.workers.dev{doc.frontmatter.route}
-            </code>
-          </div>
-          <div className="flex items-center gap-4">
-            <div className="w-12 h-12 bg-accent border border-border flex items-center justify-center shadow-sm">
-              <Info className="w-6 h-6 text-accent-foreground" />
-            </div>
-            <p className="text-[11px] text-muted-foreground leading-snug max-w-[160px] font-bold uppercase tracking-tight">
-              Use this URL in your MCP client settings (SSE transport).
+            <p className="text-display-sm text-[24px] font-light text-body-strong mb-12 max-w-3xl leading-relaxed">
+              {doc.frontmatter.description}
             </p>
-          </div>
-        </div>
-      </header>
 
-      <div className="max-w-4xl mx-auto px-6">
-        <Separator className="bg-border" />
-      </div>
-
-      <main className="max-w-4xl mx-auto px-6 py-16 prose prose-slate prose-lg dark:prose-invert prose-headings:font-heading prose-headings:tracking-tighter prose-headings:uppercase prose-p:text-muted-foreground prose-p:font-medium prose-strong:text-foreground prose-a:text-primary prose-pre:p-0 prose-pre:bg-transparent prose-pre:border-none prose-code:text-primary prose-code:bg-muted prose-code:px-1 prose-code:py-0.5 prose-code:rounded-none prose-code:font-bold">
-        <ReactMarkdown
-          remarkPlugins={[remarkGfm]}
-          components={{
-            code({ node, inline, className, children, ...props }: any) {
-              const match = /language-(\w+)/.exec(className || '');
-              return !inline && match ? (
-                <CodeBlock language={match[1]}>
-                  {String(children).replace(/\n$/, '')}
-                </CodeBlock>
-              ) : (
-                <code className="font-bold text-primary bg-muted px-1" {...props}>
-                  {children}
+            <div className="bg-surface-card border border-hairline p-1 flex flex-col md:flex-row gap-[1px] bg-hairline">
+              <div className="bg-canvas p-8 flex-1 flex flex-col gap-4">
+                <span className="text-label-uppercase text-muted">SSE ENDPOINT URL</span>
+                <code className="text-[14px] font-bold text-m-blue-light break-all select-all">
+                  https://mcppure.shraj.workers.dev{doc.frontmatter.route}
                 </code>
-              );
-            },
-          }}
-        >
-          {doc.content}
-        </ReactMarkdown>
+              </div>
+              <div className="bg-canvas p-8 flex-1 flex flex-col gap-4">
+                <span className="text-label-uppercase text-muted">STATUS</span>
+                <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 rounded-full bg-[#0fa336] animate-pulse" />
+                    <span className="text-[14px] font-bold text-on-dark uppercase">STABLE</span>
+                  </div>
+                  <div className="flex items-center gap-2 ml-4">
+                    <Activity className="w-4 h-4 text-m-red" />
+                    <span className="text-[14px] font-bold text-on-dark uppercase">ACTIVE</span>
+                  </div>
+                  <div className="flex items-center gap-2 ml-4">
+                    <Zap className="w-4 h-4 text-m-blue-light" />
+                    <span className="text-[14px] font-bold text-on-dark uppercase">HIGH SPEED</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Documentation Content */}
+        <section className="py-[96px] bg-canvas">
+          <div className="max-w-[1440px] mx-auto px-6 grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-24">
+            <div className="prose prose-invert max-w-none prose-headings:text-display-sm prose-headings:font-bold prose-headings:uppercase prose-p:font-light prose-p:text-body-strong prose-code:text-m-blue-light prose-code:bg-surface-soft prose-code:px-1 prose-code:rounded-none prose-pre:bg-surface-card prose-pre:rounded-none prose-pre:border prose-pre:border-hairline">
+              <ReactMarkdown
+                remarkPlugins={[remarkGfm]}
+                components={{
+                  code({ node, inline, className, children, ...props }: any) {
+                    const match = /language-(\w+)/.exec(className || '');
+                    return !inline && match ? (
+                      <CodeBlock language={match[1]}>
+                        {String(children).replace(/\n$/, '')}
+                      </CodeBlock>
+                    ) : (
+                      <code className="font-bold text-m-blue-light bg-surface-soft px-1" {...props}>
+                        {children}
+                      </code>
+                    );
+                  },
+                }}
+              >
+                {doc.content}
+              </ReactMarkdown>
+            </div>
+
+            <aside className="hidden lg:block">
+              <div className="sticky top-[100px]">
+                <div className="m-stripe w-12 mb-8" />
+                <h4 className="text-label-uppercase mb-8">QUICK START</h4>
+                <div className="flex flex-col gap-8">
+                  <div className="flex items-start gap-4">
+                    <div className="w-8 h-8 flex items-center justify-center border border-hairline text-[12px] font-bold">01</div>
+                    <p className="text-[14px] font-light text-body leading-relaxed">Copy the SSE Endpoint URL provided above.</p>
+                  </div>
+                  <div className="flex items-start gap-4">
+                    <div className="w-8 h-8 flex items-center justify-center border border-hairline text-[12px] font-bold">02</div>
+                    <p className="text-[14px] font-light text-body leading-relaxed">Configure your MCP client (Claude, Cursor, etc.).</p>
+                  </div>
+                  <div className="flex items-start gap-4">
+                    <div className="w-8 h-8 flex items-center justify-center border border-hairline text-[12px] font-bold">03</div>
+                    <p className="text-[14px] font-light text-body leading-relaxed">Grant necessary permissions to the AI agent.</p>
+                  </div>
+                </div>
+
+                <div className="mt-16 p-8 bg-surface-card border border-hairline">
+                  <Info className="w-6 h-6 text-m-blue-light mb-4" />
+                  <p className="text-[12px] font-bold uppercase tracking-tight mb-4">NOTE</p>
+                  <p className="text-[14px] font-light text-body leading-relaxed">
+                    This server is hosted on Cloudflare Workers and is optimized for low-latency edge execution.
+                  </p>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </section>
       </main>
 
-      <footer className="py-24 border-t border-border text-center font-bold uppercase tracking-[0.4em] text-muted-foreground">
-        <p className="text-xs mb-4 text-primary">Pure Protocol Hub</p>
-        <p className="text-[10px] opacity-50 italic">Managed by Shade Solutions</p>
+      {/* Footer */}
+      <footer className="bg-canvas border-t border-hairline py-[96px]">
+        <div className="max-w-[1440px] mx-auto px-6 text-center">
+          <div className="m-stripe w-24 h-[3px] mx-auto mb-12" />
+          <h2 className="text-display-md mb-8">START BUILDING WITH PURE PROTOCOL</h2>
+          <Link href="/docs/development" className="btn-primary inline-flex items-center justify-center">
+            LEARN TO DEPLOY
+          </Link>
+          <div className="mt-[96px] text-muted text-[12px] font-bold uppercase tracking-widest flex items-center justify-center gap-12">
+            <span>© 2026 SHADE SOLUTIONS</span>
+            <span>OPEN SOURCE</span>
+            <a href="https://github.com/shade-solutions/mcp-pure" target="_blank" rel="noreferrer" className="hover:text-on-dark transition-colors">GITHUB</a>
+          </div>
+        </div>
       </footer>
     </div>
   );

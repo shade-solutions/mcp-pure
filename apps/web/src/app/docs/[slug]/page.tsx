@@ -5,10 +5,7 @@ import remarkGfm from 'remark-gfm';
 import { getDoc, getAllDocs } from '@/lib/general-docs';
 import Link from 'next/link';
 import { CodeBlock } from '@/components/code-block';
-import { ChevronLeft, Github } from 'lucide-react';
-import { Separator } from '@/components/ui/separator';
-import { Button } from '@/components/ui/button';
-import { ModeToggle } from '@/components/mode-toggle';
+import { ChevronLeft, Github, Search } from 'lucide-react';
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
@@ -31,54 +28,98 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
   const doc = await getDoc(slug);
 
   return (
-    <div className="min-h-screen bg-background text-foreground font-sans selection:bg-primary/20">
-      <nav className="max-w-3xl mx-auto px-6 py-10 flex justify-between items-center">
-        <Button variant="ghost" asChild className="text-muted-foreground hover:text-foreground rounded-none uppercase font-bold text-xs tracking-widest">
-          <Link href="/" className="flex items-center gap-2">
-            <ChevronLeft className="w-4 h-4" />
-            Back to Hub
+    <div className="flex flex-col min-h-screen bg-canvas selection:bg-m-blue-light/30">
+      {/* Top Navigation */}
+      <nav className="fixed top-0 left-0 right-0 h-[64px] bg-canvas/80 backdrop-blur-md border-b border-hairline z-[100] px-6 flex items-center justify-between">
+        <div className="flex items-center gap-8">
+          <Link href="/" className="flex items-center gap-2 group">
+            <div className="flex flex-col gap-[2px]">
+              <div className="m-stripe w-12 h-[3px]" />
+              <span className="text-[18px] font-bold tracking-tight uppercase">MCP PURE</span>
+            </div>
           </Link>
-        </Button>
+          <div className="hidden md:flex gap-6">
+            <Link href="/docs/clients" className="text-[14px] font-light hover:text-on-dark transition-colors text-body">SETUP</Link>
+            <Link href="/docs/development" className="text-[14px] font-light hover:text-on-dark transition-colors text-body">DEPLOY</Link>
+          </div>
+        </div>
         <div className="flex items-center gap-6">
-          <Button variant="outline" size="sm" className="rounded-none h-8 px-3 font-bold uppercase tracking-widest text-[10px] hidden md:flex" asChild>
-            <a href="https://github.com/shade-solutions/mcp-pure" target="_blank" rel="noreferrer">Contribute</a>
-          </Button>
-          <img src="https://visitor-badge.laobi.icu/badge?page_id=shaswatraj.mcppure&color=000000" alt="Visitors" className="h-6 grayscale contrast-125 dark:invert" />
-          <ModeToggle />
-          <a href="https://github.com/shade-solutions/mcp-pure" className="text-muted-foreground hover:text-foreground transition-colors">
-            <Github className="w-5 h-5" />
-          </a>
+          <div className="hidden sm:flex items-center gap-4 text-muted">
+            <Search className="w-4 h-4 cursor-pointer hover:text-on-dark transition-colors" />
+            <a href="https://github.com/shade-solutions/mcp-pure" target="_blank" rel="noreferrer" className="hover:text-on-dark transition-colors">
+              <Github className="w-5 h-5" />
+            </a>
+          </div>
+          <Link href="/docs/clients" className="btn-primary flex items-center justify-center">
+            GET STARTED
+          </Link>
         </div>
       </nav>
 
-      <div className="max-w-3xl mx-auto px-6 mb-16">
-        <Separator className="bg-border" />
-      </div>
+      <main className="flex-1 pt-[64px]">
+        <section className="py-[96px] bg-canvas">
+          <div className="max-w-[1440px] mx-auto px-6 grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-24">
+            <div>
+              <Link href="/" className="text-label-uppercase text-muted flex items-center gap-2 mb-12 hover:text-on-dark transition-colors">
+                <ChevronLeft className="w-4 h-4" /> BACK TO HUB
+              </Link>
+              <div className="prose prose-invert max-w-none prose-headings:text-display-md prose-headings:font-bold prose-headings:uppercase prose-p:font-light prose-p:text-body-strong prose-code:text-m-blue-light prose-code:bg-surface-soft prose-code:px-1 prose-code:rounded-none prose-pre:bg-surface-card prose-pre:rounded-none prose-pre:border prose-pre:border-hairline">
+                <ReactMarkdown
+                  remarkPlugins={[remarkGfm]}
+                  components={{
+                    code({ node, inline, className, children, ...props }: any) {
+                      const match = /language-(\w+)/.exec(className || '');
+                      return !inline && match ? (
+                        <CodeBlock language={match[1]}>
+                          {String(children).replace(/\n$/, '')}
+                        </CodeBlock>
+                      ) : (
+                        <code className="font-bold text-m-blue-light bg-surface-soft px-1" {...props}>
+                          {children}
+                        </code>
+                      );
+                    },
+                  }}
+                >
+                  {doc.content}
+                </ReactMarkdown>
+              </div>
+            </div>
 
-      <main className="max-w-3xl mx-auto px-6 py-16 prose prose-slate prose-lg dark:prose-invert prose-headings:font-heading prose-headings:tracking-tighter prose-headings:uppercase prose-p:text-muted-foreground prose-p:font-medium prose-strong:text-foreground prose-a:text-primary prose-pre:p-0 prose-pre:bg-transparent prose-pre:border-none prose-code:text-primary prose-code:bg-muted prose-code:px-1 prose-code:py-0.5 prose-code:rounded-none prose-code:font-bold">
-        <ReactMarkdown
-          remarkPlugins={[remarkGfm]}
-          components={{
-            code({ node, inline, className, children, ...props }: any) {
-              const match = /language-(\w+)/.exec(className || '');
-              return !inline && match ? (
-                <CodeBlock language={match[1]}>
-                  {String(children).replace(/\n$/, '')}
-                </CodeBlock>
-              ) : (
-                <code className="font-bold text-primary bg-muted px-1" {...props}>
-                  {children}
-                </code>
-              );
-            },
-          }}
-        >
-          {doc.content}
-        </ReactMarkdown>
+            <aside className="hidden lg:block">
+              <div className="sticky top-[100px]">
+                <div className="m-stripe w-12 mb-8" />
+                <h4 className="text-label-uppercase mb-8 text-on-dark">DOCS</h4>
+                <ul className="flex flex-col gap-4">
+                  <li><Link href="/docs/clients" className={`text-[14px] font-light transition-colors ${slug === 'clients' ? 'text-on-dark font-bold' : 'text-muted hover:text-on-dark'}`}>Client Setup</Link></li>
+                  <li><Link href="/docs/development" className={`text-[14px] font-light transition-colors ${slug === 'development' ? 'text-on-dark font-bold' : 'text-muted hover:text-on-dark'}`}>Server Development</Link></li>
+                </ul>
+
+                <div className="mt-16 p-8 bg-surface-card border border-hairline">
+                  <p className="text-[12px] font-bold uppercase tracking-tight mb-4 text-m-blue-light">CONTRIBUTE</p>
+                  <p className="text-[14px] font-light text-body leading-relaxed mb-6">
+                    Help us improve the Pure Protocol ecosystem by contributing to our documentation.
+                  </p>
+                  <a href="https://github.com/shade-solutions/mcp-pure" target="_blank" rel="noreferrer" className="text-label-uppercase text-[12px] flex items-center gap-2 hover:text-on-dark transition-colors">
+                    VIEW ON GITHUB
+                  </a>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </section>
       </main>
 
-      <footer className="py-24 border-t border-border text-center font-bold uppercase tracking-[0.4em] text-muted-foreground">
-        <p className="text-xs mb-4 text-primary">Pure Protocol Hub</p>
+      {/* Footer */}
+      <footer className="bg-canvas border-t border-hairline py-[96px]">
+        <div className="max-w-[1440px] mx-auto px-6 text-center">
+          <div className="m-stripe w-24 h-[3px] mx-auto mb-12" />
+          <div className="text-muted text-[12px] font-bold uppercase tracking-widest flex items-center justify-center gap-12">
+            <span>© 2026 SHADE SOLUTIONS</span>
+            <span>OPEN SOURCE</span>
+            <a href="https://github.com/shade-solutions/mcp-pure" target="_blank" rel="noreferrer" className="hover:text-on-dark transition-colors">GITHUB</a>
+          </div>
+        </div>
       </footer>
     </div>
   );
