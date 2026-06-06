@@ -32,6 +32,7 @@ A central, open-source hub for high-performance Model Context Protocol (MCP) ser
 | **Apollo** | `/mcp-server/apollo` | ✅ Active |
 | **Exa Search** | `/mcp-server/exa` | ✅ Active |
 | **Instagram** | `/mcp-server/instagram` | ✅ Active |
+| **Gmail** | `/mcp-server/gmail` | ✅ Active |
 
 ## 🛠 Local Development
 
